@@ -1,3 +1,6 @@
+<?php include "navigation.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +13,14 @@
 </head>
 <body>
 <div class="container">
+
     <h2>Available Time</h2>
     <hr>
+    <div class="text-success">
+        <?php if($msg = $this->session->flashdata('msg')):?>
+            <?php echo $msg;?>
+        <?php endif;?>
+    </div>
     <table class="table table-striped table-hover ">
         <thead>
         <tr>
@@ -23,14 +32,21 @@
         </tr>
         </thead>
         <tbody>
+        <?php if(count($schedule)):?>
+            <?php foreach ($schedule as $s):?>
         <tr>
-            <td>2017-10-22</td>
-            <td class="success">Available</td>
-            <td>15:00</td>
-            <td>5</td>
-            <td><a href="makeAppointment.php" class="btn btn-primary">Book Now</a></td>
+            <td><?= $s->date?></td>
+            <td><?= $s->time?></td>
+            <td class="success"><?= $s->status?></td>
+            <td><?= $s->max_number?></td>
+            <td><?php echo anchor('welcome/makeAppointment', 'Book Now', ['class' => 'btn btn-primary']); ?></td>
         </tr>
-
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td>No record found!</td>
+            </tr>
+        <?php endif; ?>
         </tbody>
     </table>
 </div>

@@ -1,3 +1,7 @@
+<?php
+include "navigation.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +9,8 @@
     <title>Manage Appointments</title>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="../../assets/js/bootstrap.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../assets/css/bootstrap.css">
+    <script type="text/javascript" src="<?=base_url('assets/js/bootstrap.js');?>"></script>
+    <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/bootstrap.css');?>">
 </head>
 <body>
 <div class="container">
@@ -30,15 +34,34 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>Manasha Wijesurendra</td>
-            <td>0771234567</td>
-            <td>mana@gmail.com</td>
-            <td>
-                <a href="manageAppointments.php" class="btn btn-sm btn-primary">Postpone</a>
-                <a href="manageAppointments.php" class="btn btn-sm btn-danger">Cancel</a>
-            </td>
-        </tr>
+
+
+        <?php
+        if(isset($patients)){
+            foreach ($patients as $patient){
+        ?>
+             <tr>
+                 <td><?= $patient->name;?></td>
+                 <td><?= $patient->nic;?></td>
+                 <td><?= $patient->email;?></td>
+                 <td>
+                     <?=anchor('welcome/postponeAppointment', 'Postpone', ['class'=>'btn btn-sm btn-primary']);?>
+                     <?=anchor('welcome/cancel', 'Cancel', ['class'=>'btn btn-sm btn-danger']);?>
+                 </td>
+             </tr>
+        <?php
+            }
+
+        }else{
+        ?>
+            <tr>
+                <td colspan="3">No Data Found</td>
+            </tr>
+        <?php
+        }
+        ?>
+
+
 
         </tbody>
     </table>
