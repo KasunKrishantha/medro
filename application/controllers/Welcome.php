@@ -25,8 +25,11 @@ class Welcome extends CI_Controller {
 
 	}
 
-	public function makeAppointment(){
-        $this->load->view('makeAppointment');
+	public function makeAppointment($id){
+        $this->load->model('queries');
+        $schedule = $this->queries->preloadSchedule($id);
+        $this->load->view('makeAppointment', ['schedule'=>$schedule]);
+
     }
 
     public function book(){
@@ -77,17 +80,24 @@ class Welcome extends CI_Controller {
 
     }
 
-    public function postpone(){
-        $this->load->view('postponeAppointment');
+    public function postpone($nic){
+        $this->load->model('queries');
+        $appointment =  $this->queries->getRelatedApt($nic);
+        $patient = $this->queries->getRelatedPatient($nic);
+        $data['appointment'] = $appointment;
+        $data['patient'] = $patient;
+        $this->load->view('postponeAppointment', ['data'=>$data]);
+
     }
 
     public function cancel(){
         $this->load->view('cancelAppointment');
     }
 
-    public function postponeAppointment(){
-        $this->load->view('postponeAppointment');
-    }
+//    public function postponeAppointment(){
+//        $this->load->view('postponeAppointment');
+//
+//    }
 
     public function getAppointments(){
 

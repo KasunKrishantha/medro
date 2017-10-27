@@ -48,5 +48,38 @@
 
             return $patients;
         }
+
+        public function preloadSchedule($id){
+            $query = $this->db->get_where('schedule',array('id' => $id));
+            if($query->num_rows()>0){
+                return $query->row();
+            }
+        }
+
+        public function getRelatedApt($nic){
+            $query = $this->db->get_where('appointments', array('nic' => $nic));
+//            print_r($query->num_rows());
+            if($query->num_rows()>0){
+//                print_r($query->row());
+                return $query->row();
+            }
+
+//            $query1 = $this->db->get_where('appointments',array('nic' => $nic));
+//            $query2= $this->db->get_where('patient',array('nic' => $nic));
+//            if($query1->num_rows()>0 && $query2->num_rows()>0){
+//                return $query1->row();
+//            }
+        }
+
+        public function getRelatedPatient($nic){
+            $query = $this->db->get_where('patient', array('nic' => $nic));
+//            print_r($query->num_rows());
+            if($query->num_rows()>0){
+                //print_r($query->row());
+                return $query->row();
+            }
+        }
     }
+
+
 ?>

@@ -42,11 +42,11 @@ include "navigation.php";
         ?>
              <tr>
                  <td><?= $patient->name;?></td>
-                 <td><?= $patient->nic;?></td>
+                 <td><?= $patient->telno;?></td>
                  <td><?= $patient->email;?></td>
                  <td>
-                     <?=anchor('welcome/postponeAppointment', 'Postpone', ['class'=>'btn btn-sm btn-primary']);?>
-                     <?=anchor('welcome/cancel', 'Cancel', ['class'=>'btn btn-sm btn-danger']);?>
+                     <?=anchor("welcome/postpone/{$patient->nic}", 'Postpone', ['class'=>'btn btn-sm btn-primary']);?>
+                     <?=anchor("welcome/cancel/{$patient->nic}", 'Cancel', ['class'=>'btn btn-sm btn-danger']);?>
                  </td>
              </tr>
         <?php

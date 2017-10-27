@@ -23,19 +23,19 @@ include "navigation.php";
                 <div class=" form-group">
                     <label class="col-lg-2 control-label" for="date">Date</label>
                     <div class="col-lg-5">
-                        <?=form_input(['name'=>'date', 'class'=>'form-control', 'id'=>'date'])?>
+                        <?=form_input(['name'=>'date', 'class'=>'form-control', 'id'=>'date', 'value'=>set_value('date', $schedule->date)]);?>
                     </div>
                 </div>
                 <div class=" form-group">
                     <label class="col-lg-2 control-label" for="time">Time</label>
                     <div class="col-lg-5">
-                        <?=form_input(['name'=>'time', 'class'=>'form-control', 'id'=>'time'])?>
+                        <?=form_input(['name'=>'time', 'class'=>'form-control', 'id'=>'time', 'value'=>set_value('time', $schedule->time)]);?>
                     </div>
                 </div>
                 <div class=" form-group">
                     <label class="col-lg-2 control-label" for="number">Appointment #</label>
                     <div class="col-lg-5">
-                        <?=form_input(['name'=>'number', 'class'=>'form-control', 'id'=>'number'])?>
+                        <?=form_input(['name'=>'number', 'class'=>'form-control', 'id'=>'number', 'value'=>set_value('number', $schedule->max_number)])?>
                     </div>
                 </div>
                 <hr>
@@ -81,29 +81,6 @@ include "navigation.php";
                         <?=form_input(['name'=>'email', 'class'=>'form-control', 'id'=>'email'])?>
                     </div>
                 </div>
-<!--                <div class="form-group">-->
-<!--                    <label class="col-lg-2 control-label">Nationalty</label>-->
-<!--                    <div class="col-lg-10">-->
-<!--                        <div class="radio">-->
-<!--                            <label>-->
-
-<!--                                Local-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        <div class="radio">-->
-<!--                            <label>-->
-
-<!--                                Foreign-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                        <div class="checkbox">-->
-<!--                            <label>-->
-
-<!--                                I accept the terms and conditions-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <div class="form-group">
                     <div class="col-lg-10 col-lg-offset-2">
                         <?=anchor('welcome', 'Cancel', ['class'=>'btn btn-default']);?>

@@ -25,8 +25,8 @@
         <thead>
         <tr>
             <th>Appointment Date</th>
-            <th>Status</th>
             <th>Time</th>
+            <th>Status</th>
             <th>Appointment #</th>
             <th></th>
         </tr>
@@ -39,7 +39,7 @@
             <td><?= $s->time?></td>
             <td class="success"><?= $s->status?></td>
             <td><?= $s->max_number?></td>
-            <td><?php echo anchor('welcome/makeAppointment', 'Book Now', ['class' => 'btn btn-primary']); ?></td>
+            <td><?php echo anchor("welcome/makeAppointment/{$s->id}", 'Book Now', ['class' => 'btn btn-primary']); ?></td>
         </tr>
             <?php endforeach; ?>
         <?php else: ?>
