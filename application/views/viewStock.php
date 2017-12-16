@@ -14,7 +14,14 @@ include "navigation.php";
 </head>
 <body>
 <div class="container">
-    <h2>Stock Available</h2>
+    <div class="col-md-10">
+        <h2>Stock Available</h2>
+    </div>
+    <div class="col-md-2">
+        <br>
+        <a class="btn btn-primary" href="#">Add New Medication</a>
+    </div>
+    <div class="clearfix"></div>
     <hr>
 
     <div class="col-md-6">
