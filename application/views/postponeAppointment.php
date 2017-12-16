@@ -19,6 +19,11 @@ include "navigation.php";
         <?= form_open('welcome/postpone', ['class'=>'form-horizontal']);?>
         <fieldset>
             <h2 class="pull-right">Postpone Appointment</h2>
+            <div class="text-success">
+                <?php if($msg = $this->session->flashdata('msg')):?>
+                    <?php echo $msg;?>
+                <?php endif;?>
+            </div>
             <h3>Channel Details</h3>
             <hr>
             <div class=" form-group">
@@ -46,7 +51,7 @@ include "navigation.php";
             <div class="form-group">
                 <label for="name" class="col-lg-2 control-label">Name*</label>
                 <div class="col-md-5">
-                    <?=form_input(['name'=>'name', 'class'=>'form-control', 'id'=>'name', 'value'=>set_value('name', $data['patient']->name)])?>
+                    <?=form_input(['name'=>'name', 'class'=>'form-control', 'id'=>'name' ,'disabled'=>"", 'value'=>set_value('name', $data['patient']->name)])?>
                 </div>
                 <div class="col-md-5">
                     <?=form_error('name', '<div class="text-danger">', '</div>');?>
@@ -55,7 +60,7 @@ include "navigation.php";
             <div class="form-group">
                 <label for="nic" class="col-lg-2 control-label">National ID No*</label>
                 <div class="col-md-5">
-                    <?=form_input(['name'=>'nic', 'class'=>'form-control', 'id'=>'nic', 'value'=>set_value('nic', $data['patient']->nic)])?>
+                    <?=form_input(['name'=>'nic', 'class'=>'form-control', 'id'=>'nic', 'disabled'=>"",'value'=>set_value('nic', $data['patient']->nic)])?>
                 </div>
                 <div class="col-md-5">
                     <?=form_error('nic', '<div class="text-danger">', '</div>');?>
@@ -64,13 +69,13 @@ include "navigation.php";
             <div class="form-group">
                 <label for="area" class="col-lg-2 control-label">Area</label>
                 <div class="col-md-5">
-                    <?=form_input(['name'=>'area', 'class'=>'form-control', 'id'=>'area', 'value'=>set_value('area', $data['patient']->area)])?>
+                    <?=form_input(['name'=>'area', 'class'=>'form-control', 'id'=>'area', 'disabled'=>"", 'value'=>set_value('area', $data['patient']->area)])?>
                 </div>
             </div>
             <div class="form-group">
                 <label for="telno" class="col-lg-2 control-label">Telephone*</label>
                 <div class="col-md-5">
-                    <?=form_input(['name'=>'telno', 'class'=>'form-control', 'id'=>'telno', 'value'=>set_value('telno', $data['patient']->telno)])?>
+                    <?=form_input(['name'=>'telno', 'class'=>'form-control', 'id'=>'telno', 'disabled'=>"", 'value'=>set_value('telno', $data['patient']->telno)])?>
                 </div>
                 <div class="col-md-5">
                     <?=form_error('telno', '<div class="text-danger">', '</div>');?>
@@ -79,7 +84,7 @@ include "navigation.php";
             <div class="form-group">
                 <label for="email" class="col-lg-2 control-label">Email</label>
                 <div class="col-md-5">
-                    <?=form_input(['name'=>'email', 'class'=>'form-control', 'id'=>'email', 'value'=>set_value('email', $data['patient']->email)])?>
+                    <?=form_input(['name'=>'email', 'class'=>'form-control', 'id'=>'email', 'disabled'=>"", 'value'=>set_value('email', $data['patient']->email)])?>
                 </div>
             </div>
             <div class="form-group">
