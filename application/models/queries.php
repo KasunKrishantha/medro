@@ -79,6 +79,30 @@
                 return $query->row();
             }
         }
+
+        public function addStock($data){
+            return $this->db->insert('stock', $data);
+        }
+
+        public function getStock($category){
+            $query = $this->db->get_where('stock',array('category'=>$category));
+//            $this->db->where('id', $id);
+//            $query = $this->db->get('stock');
+            if($query->num_rows() > 0){
+                return $query->result();
+            }
+        }
+
+        public function insertSchedule($data){
+            return $this->db->insert('schedule', $data);
+        }
+
+        public function getAllPatients(){
+            $query = $this->db->get('patient');
+            if($query->num_rows() > 0){
+                return $query->result();
+            }
+        }
     }
 
 
