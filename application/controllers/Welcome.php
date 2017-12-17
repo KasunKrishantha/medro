@@ -94,12 +94,86 @@ class Welcome extends CI_Controller {
         $this->load->view('cancelAppointment');
     }
 
-//    public function postponeAppointment(){
-//        $this->load->view('postponeAppointment');
-//
-//    }
+    public function manageStock(){
+        $this->load->view('addStock');
+    }
+
+    public function postponeAppointment(){
+        $data = array(
+            'nic' => $this->input->post('nic'),
+            'date' => $this->input->post('date'),
+            'time' => $this->input->post('time'),
+            'number' => $this->input->post('number')
+        );
+        $this->load->model('queries');
+
+
+    }
 
     public function getAppointments(){
+//
+    }
 
+    public function addStock(){
+        $this->load->model('queries');
+        $data = $this->input->post();
+        unset($data['submit']);
+          //print_r($data);
+        if($this->queries->addStock($data)){
+            $this->session->set_flashdata('msg', 'Stock Added Successfully!');
+        }else{
+            $this->session->set_flashdata('msg', 'Failed to Add!');
+        }
+//        return redirect('welcome');
+        return redirect('welcome/manageStock');
+    }
+
+    public function viewStock(){
+        $this->load->model('queries');
+        $other = $this->queries->getStock('Other');
+//        $this->load->view('viewStock', ['other'=>$other]);
+        $pain = $this->queries->getStock('Pain Killers');
+//        $this->load->view('viewStock', ['pain'=>$pain]);
+        $analgesics = $this->queries->getStock('Analgesics');
+//        $this->load->view('viewStock', ['analgesics'=>$analgesics]);
+        $anesthetic = $this->queries->getStock('Anesthetic');
+//        $this->load->view('viewStock', ['anesthetic'=>$anesthetic]);
+        $antibiotics = $this->queries->getStock('Antibiotics');
+//        $this->load->view('viewStock', ['antibiotics'=>$antibiotics]);
+        $antifungals = $this->queries->getStock('Antifungals');
+        $this->load->view('viewStock', ['other'=>$other, 'pain'=>$pain, 'antifungals'=>$antifungals, 'analgesics'=>$analgesics, 'anesthetic'=>$anesthetic,'antibiotics'=>$antibiotics]);
+
+    }
+
+    public function getPainKillers(){
+        $this->load->model('queries');
+        $stock = $this->queries->getStock('Pain Killers');
+        $this->load->view('viewStock', ['pain'=>$stock]);
+
+    }
+
+    public function loadAddSchedule(){
+        $this->load->model('queries');
+        $schedule = $this->queries->getSchedule();
+        $this->load->view('addSchedule', ['schedule'=>$schedule]);
+    }
+
+    public function addSchedule(){
+        $this->load->model('queries');
+        $data = $this->input->post();
+        unset($data['submit']);
+        print_r($data);
+        if($this->queries->insertSchedule($data)){
+            $this->session->set_flashdata('msg', 'Record Added Successfully!');
+        }else{
+            $this->session->set_flashdata('msg', 'Failed to Add!');
+        }
+        return redirect('welcome/loadAddSchedule');
+    }
+
+    public function viewPatients(){
+        $this->load->model('queries');
+        $patients = $this->queries->getAllPatients();
+        $this->load->view('viewPatients', ['patients'=>$patients]);
     }
 }

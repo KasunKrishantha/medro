@@ -46,7 +46,7 @@ include "navigation.php";
                  <td><?= $patient->email;?></td>
                  <td>
                      <?=anchor("welcome/postpone/{$patient->nic}", 'Postpone', ['class'=>'btn btn-sm btn-primary']);?>
-                     <?=anchor("welcome/cancel/{$patient->nic}", 'Cancel', ['class'=>'btn btn-sm btn-danger']);?>
+                     
                  </td>
              </tr>
         <?php
