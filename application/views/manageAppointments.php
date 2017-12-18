@@ -16,14 +16,19 @@ include "navigation.php";
 <div class="container">
     <h2>Appointments</h2>
     <hr>
-    <form class="form-inline">
-        <div class="form-group">
-            <label for="date">Date</label>
-            <input type="text" class="form-control" id="date" placeholder="YYYY-MM-DD">
-        </div>
-        <button type="submit" class="btn btn-default">Search</button>
-    </form>
-    <hr>
+    <div class="text-success">
+        <?php if($msg = $this->session->flashdata('msg')):?>
+            <?php echo $msg;?>
+        <?php endif;?>
+    </div>
+<!--    <form class="form-inline">-->
+<!--        <div class="form-group">-->
+<!--            <label for="date">Date</label>-->
+<!--            <input type="text" class="form-control" id="date" placeholder="YYYY-MM-DD">-->
+<!--        </div>-->
+<!--        <button type="submit" class="btn btn-default">Search</button>-->
+<!--    </form>-->
+<!--    <hr>-->
     <table class="table table-striped table-hover ">
         <thead>
         <tr>

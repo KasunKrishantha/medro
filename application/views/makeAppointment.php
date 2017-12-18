@@ -16,26 +16,27 @@ include "navigation.php";
 <div class="container">
 
     <div class="col-md-9">
-        <?= form_open('welcome/book', ['class'=>'form-horizontal']);?>
+        <?= form_open("welcome/book/{$schedule->id}", ['class'=>'form-horizontal']);?>
             <fieldset>
                 <h2>Channel Details</h2>
                 <hr>
                 <div class=" form-group">
                     <label class="col-lg-2 control-label" for="date">Date</label>
                     <div class="col-lg-5">
-                        <?=form_input(['name'=>'date', 'class'=>'form-control', 'id'=>'date', 'disabled'=>"", 'value'=>set_value('date', $schedule->date)]);?>
+                        <?=form_input(['name'=>'date', 'class'=>'form-control', 'id'=>'date', 'value'=>set_value('date', $schedule->date)]);?>
                     </div>
                 </div>
                 <div class=" form-group">
                     <label class="col-lg-2 control-label" for="time">Time</label>
                     <div class="col-lg-5">
-                        <?=form_input(['name'=>'time', 'class'=>'form-control', 'id'=>'time', 'disabled'=>"", 'value'=>set_value('time', $schedule->time)]);?>
+                        <?=form_input(['name'=>'time', 'class'=>'form-control', 'id'=>'time', 'value'=>set_value('time', $schedule->time)]);?>
                     </div>
                 </div>
                 <div class=" form-group">
                     <label class="col-lg-2 control-label" for="number">Appointment #</label>
                     <div class="col-lg-5">
-                        <?=form_input(['name'=>'number', 'class'=>'form-control', 'id'=>'number', 'disabled'=>"", 'value'=>set_value('number', $schedule->max_number)])?>
+                        <?=form_input(['name'=>'number', 'class'=>'form-control', 'id'=>'number', 'value'=>set_value('number', $schedule->next_number)])?>
+                        <?=form_input(['name'=>'max_number', 'type'=>'hidden', 'class'=>'form-control', 'id'=>'max_number', 'value'=>set_value('max_number', $schedule->max_number)])?>
                     </div>
                 </div>
                 <hr>

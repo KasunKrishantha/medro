@@ -37,9 +37,23 @@
         <tr>
             <td><?= $s->date?></td>
             <td><?= $s->time?></td>
-            <td class="success"><?= $s->status?></td>
-            <td><?= $s->max_number?></td>
-            <td><?php echo anchor("welcome/makeAppointment/{$s->id}", 'Book Now', ['class' => 'btn btn-primary']); ?></td>
+
+            <?php if ($s->status == "Full"): ?>
+                <td class="danger"><?= $s->status?></td>
+            <?php else: ?>
+                <td class="success"><?= $s->status?></td>
+            <?php endif; ?>
+
+            <?php if ($s->next_number == -1): ?>
+                <td>-</td>
+            <?php else: ?>
+                <td><?= $s->next_number?></td>
+            <?php endif; ?>
+
+            <?php if ($s->next_number != -1): ?>
+                <td><?php echo anchor("welcome/makeAppointment/{$s->id}", 'Book Now', ['class' => 'btn btn-primary']); ?></td>
+            <?php endif; ?>
+
         </tr>
             <?php endforeach; ?>
         <?php else: ?>

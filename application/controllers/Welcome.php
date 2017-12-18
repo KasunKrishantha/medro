@@ -32,13 +32,12 @@ class Welcome extends CI_Controller {
 
     }
 
-    public function book(){
+    public function book($id){
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('nic', 'National ID No', 'required');
         $this->form_validation->set_rules('telno', 'Telephone', 'required');
 
-        if ($this->form_validation->run())
-        {
+        if ($this->form_validation->run()) {
             $data1 = array(
                 'nic' => $this->input->post('nic'),
                 'date' => $this->input->post('date'),
@@ -53,11 +52,28 @@ class Welcome extends CI_Controller {
                 'email' => $this->input->post('email')
             );
             $this->load->model('queries');
-            if($this->queries->addAppointment($data1, $data2)){
-                $this->session->set_flashdata('msg', 'Appointment Made Successfully!');
+            if ($this->queries->isMaximum($this->input->post('max_number'), $this->input->post('number'))){
+                if ($this->queries->addAppointmentMax($data1, $data2, $id)) {
+                    $this->session->set_flashdata('msg', 'Appointment Made Successfully!');
+                } else {
+                    $this->session->set_flashdata('msg', 'Failed to make the Appointment!');
+                }
             }else{
-                $this->session->set_flashdata('msg', 'Failed to make the Appointment!');
+                if ($this->queries->patient_exists($this->input->post('nic'))) {
+                    if ($this->queries->addAppointmentwoP($data1, $id)) {
+                        $this->session->set_flashdata('msg', 'Appointment Made Successfully!');
+                    } else {
+                        $this->session->set_flashdata('msg', 'Failed to make the Appointment!');
+                    }
+                } else {
+                    if ($this->queries->addAppointment($data1, $data2, $id)) {
+                        $this->session->set_flashdata('msg', 'Appointment Made Successfully!');
+                    } else {
+                        $this->session->set_flashdata('msg', 'Failed to make the Appointment!');
+                    }
+                }
             }
+
             return redirect('welcome');
         }
         else
@@ -82,10 +98,13 @@ class Welcome extends CI_Controller {
 
     public function postpone($nic){
         $this->load->model('queries');
+        $schedule = $this->queries->getSchedule();
+//        $this->load->view('availableTime', ['schedule'=>$schedule]);
         $appointment =  $this->queries->getRelatedApt($nic);
         $patient = $this->queries->getRelatedPatient($nic);
         $data['appointment'] = $appointment;
         $data['patient'] = $patient;
+        $data['schedule'] = $schedule;
         $this->load->view('postponeAppointment', ['data'=>$data]);
 
     }
@@ -98,14 +117,22 @@ class Welcome extends CI_Controller {
         $this->load->view('addStock');
     }
 
-    public function postponeAppointment(){
-        $data = array(
-            'nic' => $this->input->post('nic'),
-            'date' => $this->input->post('date'),
-            'time' => $this->input->post('time'),
-            'number' => $this->input->post('number')
-        );
+    public function postponeAppointment($aid, $sid){
+//        $data = array(
+//            'nic' => $this->input->post('nic'),
+//            'date' => $this->input->post('date'),
+//            'time' => $this->input->post('time'),
+//            'number' => $this->input->post('number')
+//        );
         $this->load->model('queries');
+//        echo $sid;
+//        echo $aid;
+        if($this->queries->postponeApp($aid, $sid)){
+            $this->session->set_flashdata('msg', 'Appointment Postponed Successfully!');
+        }else{
+            $this->session->set_flashdata('msg', 'Failed to postpone the Appointment!');
+        }
+        return redirect('welcome/manageAppointments');
 
 
     }
@@ -131,15 +158,10 @@ class Welcome extends CI_Controller {
     public function viewStock(){
         $this->load->model('queries');
         $other = $this->queries->getStock('Other');
-//        $this->load->view('viewStock', ['other'=>$other]);
         $pain = $this->queries->getStock('Pain Killers');
-//        $this->load->view('viewStock', ['pain'=>$pain]);
         $analgesics = $this->queries->getStock('Analgesics');
-//        $this->load->view('viewStock', ['analgesics'=>$analgesics]);
         $anesthetic = $this->queries->getStock('Anesthetic');
-//        $this->load->view('viewStock', ['anesthetic'=>$anesthetic]);
         $antibiotics = $this->queries->getStock('Antibiotics');
-//        $this->load->view('viewStock', ['antibiotics'=>$antibiotics]);
         $antifungals = $this->queries->getStock('Antifungals');
         $this->load->view('viewStock', ['other'=>$other, 'pain'=>$pain, 'antifungals'=>$antifungals, 'analgesics'=>$analgesics, 'anesthetic'=>$anesthetic,'antibiotics'=>$antibiotics]);
 
@@ -176,4 +198,9 @@ class Welcome extends CI_Controller {
         $patients = $this->queries->getAllPatients();
         $this->load->view('viewPatients', ['patients'=>$patients]);
     }
+
+//    function patientExists($nic){
+//        $this->load->model('queries');
+//        $this->queries->patient_exists($nic);
+//    }
 }
