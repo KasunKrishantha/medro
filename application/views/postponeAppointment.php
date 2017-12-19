@@ -132,7 +132,7 @@ include "navigation.php";
 
                         <?php if ($s->next_number != -1): ?>
 
-                            <td><?php echo anchor("welcome/postponeAppointment/{$data['appointment']->id}/{$s->id}", 'Select', ['class' => 'btn btn-primary']); ?></td>
+                            <td><?php echo anchor("welcome/postponeAppointment/{$data['appointment']->id}/{$s->id}/{$data['appointment']->date}/{$data['appointment']->time}", 'Select', ['class' => 'btn btn-primary']); ?></td>
                         <?php endif; ?>
 
                     </tr>

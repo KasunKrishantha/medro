@@ -159,14 +159,25 @@
             return $this->db->where('id', $aid)
                     ->update('appointments', $data) && $this->db->set('next_number', 'next_number+1', FALSE) ->where('id', $sid) ->update('schedule');
 
+        }
 
 
-//            $appointment_id = 0;
-//            $appointment = array('data' => 1);
-//            $this->db->where('id', $appointment_id);
-//            $this->db->update('ea_appointments', $appointment);
+        public function getExpenses(){
+            $thisYr = date("Y");
+            $thisYrQuery = $this->db->get_where('expenses', array('year' => $thisYr));
+            if($thisYrQuery->num_rows() > 0){
+                return $thisYrQuery->result();
+            }
+        }
 
-
+        public function getSid($date, $time){
+            $status = "Available";
+            $query = $this->db->query("SELECT DISTINCT schedule.id FROM schedule, appointments WHERE schedule.date='{$date}' && schedule.time='{$time}'");
+            if($query->num_rows() > 0){
+                $sid = $query->result();
+//                var_dump($sid[0]->id);die();
+                return $this->db->set('next_number', 'next_number-1', FALSE) ->where('id', $sid[0]->id) ->update('schedule') && $this->db->set('status', $status) ->where('id', $sid[0]->id) ->update('schedule');
+            }
 
         }
     }

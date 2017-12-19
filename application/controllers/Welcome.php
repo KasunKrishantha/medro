@@ -1,5 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+use \Stripe\Stripe;
+use \Stripe\Charge;
+use \Stripe\Customer;
 
 class Welcome extends CI_Controller {
 
@@ -74,11 +77,13 @@ class Welcome extends CI_Controller {
                 }
             }
 
-            return redirect('welcome');
+            return redirect('welcome/payment');
         }
         else
         {
-            $this->load->view('makeAppointment');
+            $this->load->model('queries');
+            $schedule = $this->queries->preloadSchedule($id);
+            $this->load->view('makeAppointment', ['schedule'=>$schedule]);
         }
     }
 
@@ -117,7 +122,7 @@ class Welcome extends CI_Controller {
         $this->load->view('addStock');
     }
 
-    public function postponeAppointment($aid, $sid){
+    public function postponeAppointment($aid, $sid, $date, $time){
 //        $data = array(
 //            'nic' => $this->input->post('nic'),
 //            'date' => $this->input->post('date'),
@@ -127,7 +132,8 @@ class Welcome extends CI_Controller {
         $this->load->model('queries');
 //        echo $sid;
 //        echo $aid;
-        if($this->queries->postponeApp($aid, $sid)){
+
+        if($this->queries->postponeApp($aid, $sid) && $this->queries->getSid($date, $time)){
             $this->session->set_flashdata('msg', 'Appointment Postponed Successfully!');
         }else{
             $this->session->set_flashdata('msg', 'Failed to postpone the Appointment!');
@@ -199,8 +205,48 @@ class Welcome extends CI_Controller {
         $this->load->view('viewPatients', ['patients'=>$patients]);
     }
 
-//    function patientExists($nic){
-//        $this->load->model('queries');
-//        $this->queries->patient_exists($nic);
-//    }
+    public function thankYou(){
+        $this->load->view('thankYou');
+    }
+
+    public function addExpenses(){
+        $this->load->model('queries');
+        $expenses = $this->queries->getExpenses();
+        $this->load->view('expenses', ['expenses'=>$expenses]);
+    }
+
+    public function expenses(){
+
+    }
+
+    public function checkout(){
+        $token = $_POST['stripeToken'];
+        try{
+            require_once ('vendor/autoload.php');
+            Stripe::setApiKey('sk_test_WriOpHhJCy3n2k2gr4BntR4k');
+
+
+
+            $charge = Charge::create(
+                array(
+                    "amount" => 1000,
+                    "currency" => "usd",
+                    "description" => "Appointment for Medro Medical Center",
+                    "source" => $token,
+                )
+            );
+            $this->load->view('thankYou');
+        }catch (\Stripe\Error\Card $e){
+            $error = $e->getMessage();
+            echo $error;
+        }
+
+    }
+
+    public function payment(){
+        $this->load->view('makePayment');
+    }
+
+
+
 }

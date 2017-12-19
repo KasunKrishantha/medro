@@ -14,6 +14,21 @@ include "navigation.php";
 </head>
 <body>
 <div class="container">
-    <h2>Make Payment</h2>
-
+    <h5 class="text-success">Your appointment has been made successfully!</h5>
+    <br><br><br>
+    <h2>Pay Now</h2>
+    <form action="checkout" method="POST">
+        <script
+                src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                data-key="pk_test_sEImnUug7zkD3lmAQqpG5rhd"
+                data-amount="1000"
+                data-name="Medro"
+                data-description="Medical Center"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-locale="auto">
+        </script>
+    </form>
+    <hr>
+    <h2>Or</h2>
+    <a href="welcome" class="btn primary">Return To Site</a>
 </div>
