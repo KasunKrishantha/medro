@@ -25,7 +25,7 @@ class Welcome extends CI_Controller {
 	    $this->load->model('queries');
 	    $schedule = $this->queries->getSchedule();
 		$this->load->view('availableTime', ['schedule'=>$schedule]);
-
+//        , 'role_id' => $user_info->role_id
 	}
 
 	public function makeAppointment($id){
@@ -38,7 +38,10 @@ class Welcome extends CI_Controller {
     public function book($id){
         $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('nic', 'National ID No', 'required');
-        $this->form_validation->set_rules('telno', 'Telephone', 'required');
+        $this->form_validation->set_rules('telno', 'Telephone', 'required|regex_match[/^[0-9]{10}$/]');
+//        $this->form_validation->set_rules('mobile', 'Mobile Number ', 'required|regex_match[/^[0-9]{10}$/]'); //{10} for 10 digits number
+
+        $this->form_validation->set_rules('email', 'Email');
 
         if ($this->form_validation->run()) {
             $data1 = array(
@@ -81,6 +84,7 @@ class Welcome extends CI_Controller {
         }
         else
         {
+//            $this->session->set_flashdata('msg', 'Please enter a valid phone number!');
             $this->load->model('queries');
             $schedule = $this->queries->preloadSchedule($id);
             $this->load->view('makeAppointment', ['schedule'=>$schedule]);
@@ -123,17 +127,8 @@ class Welcome extends CI_Controller {
     }
 
     public function postponeAppointment($aid, $sid, $date, $time){
-//        $data = array(
-//            'nic' => $this->input->post('nic'),
-//            'date' => $this->input->post('date'),
-//            'time' => $this->input->post('time'),
-//            'number' => $this->input->post('number')
-//        );
         $this->load->model('queries');
-//        echo $sid;
-//        echo $aid;
-
-        if($this->queries->postponeApp($aid, $sid) && $this->queries->getSid($date, $time)){
+        if($this->queries->postponeApp($aid, $sid)){
             $this->session->set_flashdata('msg', 'Appointment Postponed Successfully!');
         }else{
             $this->session->set_flashdata('msg', 'Failed to postpone the Appointment!');
@@ -143,9 +138,8 @@ class Welcome extends CI_Controller {
 
     }
 
-    public function getAppointments(){
-//
-    }
+//    public function getAppointments(){
+//    }
 
     public function addStock(){
         $this->load->model('queries');
@@ -157,7 +151,6 @@ class Welcome extends CI_Controller {
         }else{
             $this->session->set_flashdata('msg', 'Failed to Add!');
         }
-//        return redirect('welcome');
         return redirect('welcome/manageStock');
     }
 
@@ -245,6 +238,15 @@ class Welcome extends CI_Controller {
 
     public function payment(){
         $this->load->view('makePayment');
+    }
+
+    public function phone($phone){
+        if(preg_match("/^[0-9]{3}-[0-9]{4}-[0-9]{4}$/", $phone)) {
+           return true;
+        }else{
+            return false;
+//            $this->session->set_flashdata('msg', 'Please enter a valid phone number');
+        }
     }
 
 

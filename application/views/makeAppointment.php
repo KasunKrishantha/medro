@@ -79,7 +79,10 @@ include "navigation.php";
                 <div class="form-group">
                     <label for="email" class="col-lg-2 control-label">Email</label>
                     <div class="col-md-5">
-                        <?=form_input(['name'=>'email', 'class'=>'form-control', 'id'=>'email'])?>
+                        <?=form_input(['name'=>'email', 'type'=>'email', 'class'=>'form-control', 'id'=>'email'])?>
+                    </div>
+                    <div class="col-md-5">
+                        <?=form_error('email', '<div class="text-danger">', '</div>');?>
                     </div>
                 </div>
                 <div class="form-group">

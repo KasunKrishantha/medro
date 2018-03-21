@@ -19,7 +19,9 @@
                 <li><?= anchor('welcome/viewStock', 'View Stock')?></li>
                 <li><?= anchor('welcome/loadAddSchedule', 'Add Schedule')?></li>
                 <li><?= anchor('welcome/viewPatients', 'View Patients')?></li>
-                <li><?= anchor('welcome/addExpenses', 'Expenses')?></li>
+                <li><?= anchor('pation_font_end', 'View Patient Profile')?></li>
+                <li><?= anchor('critical_level_controller', 'Low Stock Levels')?></li>
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Logout</a></li>

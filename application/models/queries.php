@@ -22,24 +22,12 @@
 
         public function getAppointments(){
             $today = date('Y-m-d');
-//            $this->db->where("DATE_FORMAT(from_unixtime(date), '%Y-%m-%d') >", $today, false);
-//            WHERE DATE_FORMAT(news.thedate,'%Y-%d') = '2005-09'
-//            $this->db->where('DATE_FORMAT(date, "%Y-%m-%d") >', $today);
-
             $query = $this->db->query("SELECT * FROM appointments WHERE date > '{$today}'");
-//            $query = $this->db->query(
-//                "SELECT FROM tbl_event WHERE event_id = {$id} AND event_startdate <= '{$today}'
-//        AND event_enddate >= '{$today}'");
-
-
-//            $query = $this->db->get('appointments');
             $row_count = $query->num_rows();
             $appointments = array();
             for ($i = 0; $i < $row_count; $i++){
                 array_push($appointments, $query->row($i));
             }
-//            print_r($query->row($row_count-1));
-//            echo "row count ".$row_count;
             return $appointments;
         }
 

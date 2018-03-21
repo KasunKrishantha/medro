@@ -14,8 +14,8 @@ include "navigation.php";
 </head>
 <body>
 <div class="container">
+    <br><br><br><br>
     <h1 class="text-center text-success">Thank You!</h1>
-    <h4>Your appointment has been made successfully!</h4>
-    <a href="welcome" class="btn primary">Back To Site</a>
+    <h4 class="text-center">Your payment has been made successfully!</h4>
 
 </div>
